@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-const defaultTheme = require('tailwindcss/defaultTheme');
-import preset from './vendor/filament/filament/tailwind.config.preset';
+//const defaultTheme = require('tailwindcss/defaultTheme');
+//import preset from './vendor/filament/filament/tailwind.config.preset';
 
 export default {
   //presets: [ preset ],
