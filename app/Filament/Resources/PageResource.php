@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\AuthorField;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\CodeField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\ContentBlocksField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\HeroImageSection;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\OverviewFields;
@@ -41,11 +42,12 @@ class PageResource extends Resource
                         Tab::make('General')
                             ->schema([
                                 TitleField::create(true),
+                                CodeField::create(),
                                 SlugField::create(),
-                                PublicationSection::create(),
+                                IntroField::create(),
                                 AuthorField::create(),
                                 HeroImageSection::create(),
-                                IntroField::create(),
+                                PublicationSection::create(),
                             ]),
                         Tab::make('Content')
                             ->schema([

@@ -38,6 +38,9 @@ return new class extends Migration
             //Content blocks:
             $table->json('content_blocks'); //Default only works on JSON on MySQL 8 or newer
 
+            //Unique code:
+            $table->string('code')->nullable()->unique();
+
             //Slug:
             $table->string('slug');
 
