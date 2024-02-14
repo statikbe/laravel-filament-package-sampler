@@ -36,8 +36,7 @@ class Page extends Model implements HasContentBlocks, HasHeroImageAttributes, Ha
 
     public function getViewUrl(?string $locale = null): string
     {
-        //todo implement controller and add route:
-        return config('app.url');
+        return route('page_index', ['page' => $this]);
     }
 
     public function getPreviewUrl(?string $locale = null): string

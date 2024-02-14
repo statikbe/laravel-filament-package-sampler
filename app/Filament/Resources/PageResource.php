@@ -20,6 +20,7 @@ use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\IntroField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\SlugField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\TitleField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\PublishAction;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\ViewAction;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\PublishedColumn;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\TitleColumn;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Filters\PublishedFilter;
@@ -76,6 +77,7 @@ class PageResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 PublishAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
