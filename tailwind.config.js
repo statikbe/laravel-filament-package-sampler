@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 
 //const defaultTheme = require('tailwindcss/defaultTheme');
-//import preset from './vendor/filament/filament/tailwind.config.preset';
+// import preset from './resources/css/filament/admin/tailwind.config.js'
 
 export default {
-  //presets: [ preset ],
   content: [
+      "./app/Filament/**/*.php",
+      "./vendor/filament/**/*.blade.php",
+      "./vendor/statikbe/laravel-filament-chained-translation-manager/**/*.blade.php",
       "./resources/**/*.blade.php",
       "./resources/**/*.js",
       //'./lang/**/*.php',
