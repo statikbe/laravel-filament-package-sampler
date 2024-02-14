@@ -82,6 +82,7 @@ class PageResource extends Resource
                 ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 PublishAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
