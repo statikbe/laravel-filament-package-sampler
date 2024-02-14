@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use FilamentTiptapEditor\TiptapEditor;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\AuthorField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\ContentBlocksField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\HeroImageSection;
@@ -20,9 +21,11 @@ use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\IntroField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\SlugField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\TitleField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\PublishAction;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\ViewAction;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\PublishedColumn;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\TitleColumn;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Filters\PublishedFilter;
+use Tiptap\Editor;
 
 class PageResource extends Resource
 {
@@ -44,7 +47,9 @@ class PageResource extends Resource
                                 PublicationSection::create(),
                                 AuthorField::create(),
                                 HeroImageSection::create(),
-                                IntroField::create(),
+                                //IntroField::create(),
+                                TiptapEditor::make('intro')
+                                    ->required(),
                             ]),
                         Tab::make('Content')
                             ->schema([
@@ -74,6 +79,7 @@ class PageResource extends Resource
                 PublishedFilter::create(),
             ])
             ->actions([
+                ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 PublishAction::make(),
             ])

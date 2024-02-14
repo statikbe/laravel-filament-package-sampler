@@ -7,5 +7,6 @@ export default {
         './resources/views/filament/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
         './vendor/statikbe/laravel-filament-chained-translation-manager/**/*.blade.php',
+        './vendor/awcodes/filament-tiptap-editor/resources/**/*.blade.php',
     ],
 }

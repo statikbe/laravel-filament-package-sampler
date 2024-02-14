@@ -9,7 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-pdo": "*",
         "artesaos/seotools": "^1.2",
+        "awcodes/filament-tiptap-editor": "^3.0",
         "filament/filament": "v3.1.18",
         "filament/spatie-laravel-translatable-plugin": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
@@ -18,8 +20,7 @@
         "laravel/tinker": "^2.8",
         "mcamara/laravel-localization": "^1.8",
         "statikbe/laravel-filament-chained-translation-manager": "^3.2",
-        "statikbe/laravel-filament-flexible-content-blocks": "0.2.9",
-        "ext-pdo": "*"
+        "statikbe/laravel-filament-flexible-content-blocks": "0.2.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
