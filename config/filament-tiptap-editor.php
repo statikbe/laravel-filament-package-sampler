@@ -1,5 +1,7 @@
 <?php
 
+use App\Filament\TipTapEditor\Actions\RouteOrLinkAction;
+
 return [
     'direction' => 'ltr',
     'max_content_width' => '5xl',
@@ -34,7 +36,8 @@ return [
     */
     'media_action' => FilamentTiptapEditor\Actions\MediaAction::class,
     //    'media_action' => Awcodes\Curator\Actions\MediaAction::class,
-    'link_action' => FilamentTiptapEditor\Actions\LinkAction::class,
+    //'link_action' => FilamentTiptapEditor\Actions\LinkAction::class,
+    'link_action' => RouteOrLinkAction::class,
 
     /*
     |--------------------------------------------------------------------------
