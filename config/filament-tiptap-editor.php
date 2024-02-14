@@ -48,7 +48,7 @@ return [
     |
     | See: https://tiptap.dev/guide/output
     */
-    'output' => FilamentTiptapEditor\Enums\TiptapOutput::Html,
+    'output' => FilamentTiptapEditor\Enums\TiptapOutput::Json,
 
     /*
     |--------------------------------------------------------------------------
