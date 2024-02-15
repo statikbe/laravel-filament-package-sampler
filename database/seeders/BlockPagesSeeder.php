@@ -34,7 +34,7 @@ class BlockPagesSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = app(Generator::class);
+        // $faker = app(Generator::class);
 
         $blocks = [
             [
@@ -48,7 +48,6 @@ class BlockPagesSeeder extends Seeder
                         'en' => "A basic block with title and text.",
                         'nl' => 'Een eenvoudig blok met titel en tekst.',
                     ],
-                    'content_blocks' => [],
                     'slug' => [
                         'en' => 'text-block-page',
                         'nl' => 'tekstblok-pagina',
@@ -67,7 +66,6 @@ class BlockPagesSeeder extends Seeder
                         'en' => "A basic block with title, image and text.",
                         'nl' => 'Een eenvoudig blok met titel, afbeelding en tekst.',
                     ],
-                    'content_blocks' => [],
                     'slug' => [
                         'en' => 'text-image-block-page',
                         'nl' => 'tekst-afbeelding-blok-pagina',
@@ -86,7 +84,6 @@ class BlockPagesSeeder extends Seeder
                         'en' => "A basic block with title and image.",
                         'nl' => 'Een eenvoudig blok met titel en afbeelding',
                     ],
-                    'content_blocks' => [],
                     'slug' => [
                         'en' => 'image-block-page',
                         'nl' => 'afbeelding-blok-pagina',
@@ -100,6 +97,8 @@ class BlockPagesSeeder extends Seeder
             // add hero image
             $block['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL];
             $block['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL];
+            $block['content']['content_blocks'] = ['en' => [], 'nl' => []];
+            $block_content_en = array_combine(array_keys($block['content']), array_column($block['content'],'en'));
 
             // make translatable page
             $page = TranslatablePage::updateOrCreate(['code'=> $block['code']], $block['content']);
@@ -109,16 +108,13 @@ class BlockPagesSeeder extends Seeder
             }
             TranslatablePage::updateOrCreate(['code'=> $block['code']], $block['content']);
 
-            // make simple page
-            $block_content_en = array_combine(array_keys($block['content']), array_column($block['content'],'en'));
+            // // make simple page
             $page = Page::updateOrCreate(['code'=> $block['code']], $block_content_en);
             foreach($block['blocks'] as $blocktype){
-                $block['content']['content_blocks'][] = $this->makeBlockOfType($blocktype, $page);
+                $block_content_en['content']['content_blocks'][] = $this->makeBlockOfType($blocktype, $page);
             }
-            Page::updateOrCreate(['code'=> $block['code']], $block['content']);
-
+            Page::updateOrCreate(['code'=> $block['code']], $block_content_en['content']);
         }
-
     }
 
     private function makeBlockOfType($type, $page){
