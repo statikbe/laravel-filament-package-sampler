@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Page;
 use App\Models\TranslatablePage;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator;
@@ -17,7 +16,7 @@ class BlockPagesSeeder extends Seeder
      *
      * @var \Faker\Generator
      */
-    protected $faker; // =  app(Generator::class);
+    protected $faker;
 
     /**
      * Create a new seeder instance.
@@ -34,8 +33,6 @@ class BlockPagesSeeder extends Seeder
      */
     public function run(): void
     {
-        // $faker = app(Generator::class);
-
         $blocks = [
             [
                 'code' => 'TEXT_BLOCK_PAGE',
@@ -90,6 +87,24 @@ class BlockPagesSeeder extends Seeder
                     ],
                 ],
                 'blocks' => ['image']
+            ],
+            [
+                'code' => 'CARDS_PAGE',
+                'content' => [
+                    'title' => [
+                        'en' => 'Cards block',
+                        'nl' => 'Kaartenblok',
+                    ],
+                    'intro' => [
+                        'en' => "This block is comparable to the overview block, however you can add the title, description, image and CTA for each card. The image conversion, background colour and grid columns can be configured.",
+                        'nl' => 'Dit blok is vergelijkbaar met het overzichtsblok, maar je kan de titel, beschrijving, afbeelding en call to action instellen voor iedere kaart afzonderlijk. De afbeeldingsconversie, achtergrondkleur en rasterkolommen kunnen ook ingesteld worden.',
+                    ],
+                    'slug' => [
+                        'en' => 'cards-block-page',
+                        'nl' => 'kaarten-blok-pagina',
+                    ],
+                ],
+                'blocks' => ['cards']
             ],
         ];
 
@@ -250,12 +265,33 @@ class BlockPagesSeeder extends Seeder
     }
 
     private function createCardsBlock($page) {
-            return [
+        $cards = [
             "data" => [
-
+                "title" => $this->faker->sentence(),
+                "grid_columns" => 3,
+                "block_style" => "default",
+                "image_conversion" => "crop",
+                "background_colour" => "primary",
+                "cards" => [],
             ],
             "type" => "filament-flexible-content-blocks::cards",
         ];
+        for($i=0; $i<10; $i++){
+            $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
+            $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::cards");
+            $cards["data"]["cards"][] = [
+                "title" =>  $this->faker->sentence(),
+                "text" =>  $this->faker->paragraph(),
+                "image" => $mediaObject->uuid ,
+                "image_title" => $this->faker->sentence(),
+                "image_width" => "50%",
+                "image_position" => "center",
+                "image_copyright" => $this->faker->sentence(),
+                "image_conversion" => "contain",
+                "card_call_to_action" => [],
+            ];
+        }
+        return $cards;
     }
 
     private function createTemplateBlock($page) {
