@@ -48,15 +48,13 @@ class BlockPagesSeeder extends Seeder
                         'en' => "A basic block with title and text.",
                         'nl' => 'Een eenvoudig blok met titel en tekst.',
                     ],
-                    'content_blocks' => [
-                        'en' => [$this->createTextBlock()],
-                        'nl' => [$this->createTextBlock()],
-                    ],
+                    'content_blocks' => [],
                     'slug' => [
                         'en' => 'text-block-page',
                         'nl' => 'tekstblok-pagina',
                     ],
-                ]
+                ],
+                'blocks' => ['text']
             ],
             [
                 'code' => 'TEXT_IMAGE_BLOCK_PAGE',
@@ -69,15 +67,13 @@ class BlockPagesSeeder extends Seeder
                         'en' => "A basic block with title, image and text.",
                         'nl' => 'Een eenvoudig blok met titel, afbeelding en tekst.',
                     ],
-                    'content_blocks' => [
-                        'en' => [$this->createTextImageBlock()],
-                        'nl' => [$this->createTextImageBlock()],
-                    ],
+                    'content_blocks' => [],
                     'slug' => [
                         'en' => 'text-image-block-page',
                         'nl' => 'tekst-afbeelding-blok-pagina',
                     ],
-                ]
+                ],
+                'blocks' => ['text-image']
             ],
             [
                 'code' => 'IMAGE_BLOCK_PAGE',
@@ -90,15 +86,13 @@ class BlockPagesSeeder extends Seeder
                         'en' => "A basic block with title and image.",
                         'nl' => 'Een eenvoudig blok met titel en afbeelding',
                     ],
-                    'content_blocks' => [
-                        'en' => [$this->createImageBlock()],
-                        'nl' => [$this->createImageBlock()],
-                    ],
+                    'content_blocks' => [],
                     'slug' => [
                         'en' => 'image-block-page',
                         'nl' => 'afbeelding-blok-pagina',
                     ],
-                ]
+                ],
+                'blocks' => ['image']
             ],
         ];
 
@@ -107,16 +101,63 @@ class BlockPagesSeeder extends Seeder
             $block['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL];
             $block['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL];
 
+            // make translatable page
+            $page = TranslatablePage::updateOrCreate(['code'=> $block['code']], $block['content']);
+            foreach($block['blocks'] as $blocktype){
+                $block['content']['content_blocks']['en'][] = $this->makeBlockOfType($blocktype, $page);
+                $block['content']['content_blocks']['nl'][] = $this->makeBlockOfType($blocktype, $page);
+            }
             TranslatablePage::updateOrCreate(['code'=> $block['code']], $block['content']);
 
+            // make simple page
             $block_content_en = array_combine(array_keys($block['content']), array_column($block['content'],'en'));
-            Page::updateOrCreate(['code'=> $block['code']], $block_content_en);
+            $page = Page::updateOrCreate(['code'=> $block['code']], $block_content_en);
+            foreach($block['blocks'] as $blocktype){
+                $block['content']['content_blocks'][] = $this->makeBlockOfType($blocktype, $page);
+            }
+            Page::updateOrCreate(['code'=> $block['code']], $block['content']);
+
         }
 
     }
 
+    private function makeBlockOfType($type, $page){
+        switch($type) {
+            case 'text':
+                $block = $this->createTextBlock($page);
+                break;
+            case 'video':
+                $block = $this->createVideoBlock($page);
+                break;
+            case 'image':
+                $block = $this->createImageBlock($page);
+                break;
+            case 'html':
+                $block = $this->createHtmlBlock($page);
+                break;
+            case 'text-image':
+                $block = $this->createTextImageBlock($page);
+                break;
+            case 'overview':
+                $block = $this->createOverviewBlock($page);
+                break;
+            case 'quote':
+                $block = $this->createQuoteBlock($page);
+                break;
+            case 'call-to-action':
+                $block = $this->createCallToActionBlock($page);
+                break;
+            case 'cards':
+                $block = $this->createCardsBlock($page);
+                break;
+            case 'template':
+                $block = $this->createTemplateBlock($page);
+                break;
+        }
+        return $block;
+    }
 
-    private function createTextBlock(){
+    private function createTextBlock($page){
         return [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -128,7 +169,7 @@ class BlockPagesSeeder extends Seeder
         ];
     }
 
-    private function createVideoBlock() {
+    private function createVideoBlock($page) {
         return [
             "data" => [
 
@@ -137,9 +178,9 @@ class BlockPagesSeeder extends Seeder
         ];
     }
 
-    private function createImageBlock() {
-        $image = $this->faker->image(public_path(),400,300, null, false);
-        $mediaObject = User::all()->first()->get()->addMedia($image)->toMediaCollection('images');
+    private function createImageBlock($page) {
+        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
+        $mediaObject = $page->addMedia($image)->toMediaCollection('images');
         return [
             "data" => [
                 "image" => $mediaObject->uuid ,
@@ -155,7 +196,7 @@ class BlockPagesSeeder extends Seeder
         ];
     }
 
-    private function createHtmlBlock() {
+    private function createHtmlBlock($page) {
             return [
             "data" => [
 
@@ -164,9 +205,9 @@ class BlockPagesSeeder extends Seeder
         ];
     }
 
-    private function createTextImageBlock() {
-        $image = $this->faker->image(public_path(),400,300, null, false);
-        $mediaObject = User::all()->first()->get()->addMedia($image)->toMediaCollection('images');
+    private function createTextImageBlock($page) {
+        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
+        $mediaObject = $page->addMedia($image)->toMediaCollection('images');
         return [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -185,48 +226,48 @@ class BlockPagesSeeder extends Seeder
         ];
     }
 
-    private function createOverviewBlock() {
+    private function createOverviewBlock($page) {
             return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::",
+            "type" => "filament-flexible-content-blocks::overview",
         ];
     }
 
-    private function createQuoteBlock() {
+    private function createQuoteBlock($page) {
             return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::",
+            "type" => "filament-flexible-content-blocks::quote",
         ];
     }
 
-    private function createCallToActionBlock() {
+    private function createCallToActionBlock($page) {
             return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::",
+            "type" => "filament-flexible-content-blocks::call-to-action",
         ];
     }
 
-    private function createCardsBlock() {
+    private function createCardsBlock($page) {
             return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::",
+            "type" => "filament-flexible-content-blocks::cards",
         ];
     }
 
-    private function createTemplateBlock() {
+    private function createTemplateBlock($page) {
         return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::",
+            "type" => "filament-flexible-content-blocks::template",
         ];
     }
 
