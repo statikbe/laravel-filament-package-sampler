@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\AuthorField;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\CodeField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\ContentBlocksField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\HeroImageSection;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\OverviewFields;
@@ -20,6 +21,7 @@ use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\IntroField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\SlugField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\TitleField;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\PublishAction;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\ViewAction;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\PublishedColumn;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\TitleColumn;
 use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Filters\PublishedFilter;
@@ -40,11 +42,12 @@ class PageResource extends Resource
                         Tab::make('General')
                             ->schema([
                                 TitleField::create(true),
+                                CodeField::create(),
                                 SlugField::create(),
-                                PublicationSection::create(),
+                                IntroField::create(),
                                 AuthorField::create(),
                                 HeroImageSection::create(),
-                                IntroField::create(),
+                                PublicationSection::create(),
                             ]),
                         Tab::make('Content')
                             ->schema([
@@ -76,6 +79,7 @@ class PageResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 PublishAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
