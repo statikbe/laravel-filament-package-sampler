@@ -108,7 +108,7 @@ class BlockPagesSeeder extends Seeder
             }
             TranslatablePage::updateOrCreate(['code'=> $block['code']], $block['content']);
 
-            // // make simple page
+            // make simple page
             $page = Page::updateOrCreate(['code'=> $block['code']], $block_content_en);
             foreach($block['blocks'] as $blocktype){
                 $block_content_en['content']['content_blocks'][] = $this->makeBlockOfType($blocktype, $page);
@@ -176,7 +176,7 @@ class BlockPagesSeeder extends Seeder
 
     private function createImageBlock($page) {
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection('images');
+        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::image");
         return [
             "data" => [
                 "image" => $mediaObject->uuid ,
@@ -203,7 +203,7 @@ class BlockPagesSeeder extends Seeder
 
     private function createTextImageBlock($page) {
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection('images');
+        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::text-image");
         return [
             "data" => [
                 "title" => $this->faker->sentence(),
