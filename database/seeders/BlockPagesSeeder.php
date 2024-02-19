@@ -11,30 +11,8 @@ use Illuminate\Container\Container;
 
 class BlockPagesSeeder extends Seeder
 {
-    /**
-     * The Faker instance.
-     *
-     * @var \Faker\Generator
-     */
-    protected $faker;
 
-    /**
-     * Create a new seeder instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->faker = Container::getInstance()->make(Generator::class);
-    }
-
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        //TODO steek deze data ergens anders dan is je run function veel cleaner. in een class var of een function.
-        $pages = [
+    protected $pages =  [
             'TEXT_BLOCK_PAGE' => [
                 'content' => [
                     'title' => [
@@ -129,6 +107,30 @@ class BlockPagesSeeder extends Seeder
             ],
         ];
 
+
+    /**
+     * The Faker instance.
+     *
+     * @var \Faker\Generator
+     */
+    protected $faker;
+
+    /**
+     * Create a new seeder instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->faker = Container::getInstance()->make(Generator::class);
+    }
+
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $pages = $this->pages;
         foreach($pages as $code => $page){
             // add hero image
             //TODO gebruik faker om content in te vullen
