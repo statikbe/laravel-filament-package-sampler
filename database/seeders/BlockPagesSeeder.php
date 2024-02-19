@@ -33,6 +33,7 @@ class BlockPagesSeeder extends Seeder
      */
     public function run(): void
     {
+        //TODO steek deze data ergens anders dan is je run function veel cleaner. in een class var of een function.
         $blocks = [
             'TEXT_BLOCK_PAGE' => [
                 'content' => [
@@ -106,10 +107,13 @@ class BlockPagesSeeder extends Seeder
 
         foreach($blocks as $code => $block){
             // add hero image
+            //TODO gebruik faker om content in te vullen
             $block['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL];
             $block['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL];
             $block['content']['content_blocks'] = ['en' => [], 'nl' => []];
             $block_content_en = array_combine(array_keys($block['content']), array_column($block['content'],'en'));
+
+            //TODO: 1 model per seeder
 
             // make translatable page
             $page = TranslatablePage::updateOrCreate(['code'=> $code], $block['content']);
