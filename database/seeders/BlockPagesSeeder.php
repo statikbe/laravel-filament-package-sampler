@@ -34,7 +34,11 @@ class BlockPagesSeeder extends Seeder
     public function run(): void
     {
         //TODO steek deze data ergens anders dan is je run function veel cleaner. in een class var of een function.
+<<<<<<< HEAD
         $pages = [
+=======
+        $blocks = [
+>>>>>>> fac21e78e282c74ba8975ba312308047d6d0fec9
             'TEXT_BLOCK_PAGE' => [
                 'content' => [
                     'title' => [
@@ -132,10 +136,19 @@ class BlockPagesSeeder extends Seeder
         foreach($pages as $code => $page){
             // add hero image
             //TODO gebruik faker om content in te vullen
+<<<<<<< HEAD
             $page['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL];
             $page['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL];
             $page['content']['content_blocks'] = ['en' => [], 'nl' => []];
             $page_content_en = array_combine(array_keys($page['content']), array_column($page['content'],'en'));
+
+            //TODO: 1 model per seeder
+=======
+            $block['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL];
+            $block['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL];
+            $block['content']['content_blocks'] = ['en' => [], 'nl' => []];
+            $block_content_en = array_combine(array_keys($block['content']), array_column($block['content'],'en'));
+>>>>>>> fac21e78e282c74ba8975ba312308047d6d0fec9
 
             //TODO: 1 model per seeder
 
