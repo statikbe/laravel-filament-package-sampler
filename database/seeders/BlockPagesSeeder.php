@@ -105,6 +105,28 @@ class BlockPagesSeeder extends Seeder
                     ]
                 ],
             ],
+            'VIDEO_PAGE' => [
+                'content' => [
+                    'title' => [
+                        'en' => 'Video block',
+                        'nl' => 'Videoblok',
+                    ],
+                    'intro' => [
+                        'en' => "You can embed videos from numerous media services and set an overlay image that will cause the video embed to be lazy loaded after clicking the image.",
+                        'nl' => "Je kan video's van meerdere media services embedden en een overlay afbeelding instellen die ervoor zorgt dat de video pas geladen wordt nadat de afbeelding aangeklikt wordt.",
+                    ],
+                    'slug' => [
+                        'en' => 'video-block-page',
+                        'nl' => 'video-blok-pagina',
+                    ],
+                ],
+                'blocks' => [
+                    [
+                        'block_type' => 'video',
+                    ]
+                ],
+            ],
+
         ];
 
 
@@ -131,32 +153,53 @@ class BlockPagesSeeder extends Seeder
     public function run(): void
     {
         $pages = $this->pages;
-        foreach($pages as $code => $page){
-            // add hero image
-            //TODO gebruik faker om content in te vullen
-            $page['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL];
-            $page['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL];
-            $page['content']['content_blocks'] = ['en' => [], 'nl' => []];
-            $page_content_en = array_combine(array_keys($page['content']), array_column($page['content'],'en'));
-
-            //TODO: 1 model per seeder
+        foreach($pages as $code => $page_data){
+            // create empty content_blocks
+            $page_data['content']['content_blocks'] = ['en' => [], 'nl' => []];
+            $page_data_en = array_combine(array_keys($page_data['content']), array_column($page_data['content'],'en'));
 
             //TODO: 1 model per seeder
 
             // make translatable page
-            $translatable_page = TranslatablePage::updateOrCreate(['code'=> $code], $page['content']);
-            foreach($page['blocks'] as $block){
-                $page['content']['content_blocks']['en'][] = $this->makeBlockOfType($block, $translatable_page);
-                $page['content']['content_blocks']['nl'][] = $this->makeBlockOfType($block, $translatable_page);
+            $translatable_page = TranslatablePage::updateOrCreate(['code'=> $code], $page_data['content']);
+            $langcodes = ['en', 'nl'];
+            foreach($langcodes as $langcode){
+                // add seo
+                $translatable_page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->withCustomProperties(['locale' => $langcode])->toMediaCollection("seo_image");
+                $page_data['content']['seo_title'][$langcode] = $this->faker->sentence();
+                $page_data['content']['seo_description'][$langcode] = $this->faker->paragraph();
+                $page_data['content']['seo_keywords'][$langcode] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
+                // add hero image
+                $translatable_page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->withCustomProperties(['locale' => $langcode])->toMediaCollection("hero_image");
+                $page_data['content']['hero_image_title'][$langcode] = $this->faker->sentence();
+                $page_data['content']['hero_image_copyright'][$langcode] = $this->faker->sentence();
+                // add overview
+                $page_data['content']['overview_title'][$langcode] = $this->faker->sentence();
+                $page_data['content']['overview_description'][$langcode] = $this->faker->paragraph();
+                foreach($page_data['blocks'] as $block){
+                    $page_data['content']['content_blocks'][$langcode][] = $this->makeBlockOfType($block, $translatable_page);
+                }
             }
-            TranslatablePage::updateOrCreate(['code'=> $code], $page['content']);
+            TranslatablePage::updateOrCreate(['code'=> $code], $page_data['content']);
 
             // make simple page
-            $simple_page = Page::updateOrCreate(['code'=> $code], $page_content_en);
-            foreach($page['blocks'] as $block){
-                $page_content_en['content']['content_blocks'][] = $this->makeBlockOfType($block, $simple_page);
+            $page = Page::updateOrCreate(['code'=> $code], $page_data_en);
+            // add seo
+            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->toMediaCollection("seo_image");
+            $page_data_en['content']['seo_title'] = $this->faker->sentence();
+            $page_data_en['content']['seo_description'] = $this->faker->paragraph();
+            $page_data_en['content']['seo_keywords'] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
+            // add hero image
+            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->toMediaCollection("hero_image");
+            $page_data_en['content']['hero_image_title'] = $this->faker->sentence();
+            $page_data_en['content']['hero_image_copyright'] = $this->faker->sentence();
+            // add overview
+            $page_data_en['content']['overview_title'] = $this->faker->sentence();
+            $page_data_en['content']['overview_description'] = $this->faker->paragraph();
+            foreach($page_data['blocks'] as $block){
+                $page_data_en['content']['content_blocks'][] = $this->makeBlockOfType($block, $page);
             }
-            Page::updateOrCreate(['code'=> $code], $page_content_en['content']);
+            Page::updateOrCreate(['code'=> $code], $page_data_en['content']);
         }
     }
 
@@ -168,7 +211,7 @@ class BlockPagesSeeder extends Seeder
                 $block = $this->createTextBlock($page, ...$block);
                 break;
             case 'video':
-                $block = $this->createVideoBlock($page, ...$block);
+                $block = $this->createVideoBlock($page);
                 break;
             case 'image':
                 $block = $this->createImageBlock($page, ...$block);
@@ -210,10 +253,13 @@ class BlockPagesSeeder extends Seeder
         ];
     }
 
-    private function createVideoBlock($page, $block_style='default', $background_colour='primary') {
+    private function createVideoBlock($page) {
+        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
+        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::video");
         return [
             "data" => [
-
+                "overlay_image" => $mediaObject->uuid ,
+                "embed_url" => "https://www.youtube.com/watch?v=mw4k1tCnAuE", // TODO: uitzoeken hoe random video url genereren (of iets beters dan dit, evt zelf online zetten? Vragen aan iemand?) $this->faker->url(),
             ],
             "type" => "filament-flexible-content-blocks::video",
         ];
