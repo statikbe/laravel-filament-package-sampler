@@ -156,6 +156,8 @@ class BlockPagesSeeder extends Seeder
         foreach($pages as $code => $page_data){
             // create empty content_blocks
             $page_data['content']['content_blocks'] = ['en' => [], 'nl' => []];
+            $page_data['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL]; // Necessary because Field 'hero_image_copyright' doesn't have a default value
+            $page_data['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL]; // Necessary because Field 'hero_image_title' doesn't have a default value
             $page_data_en = array_combine(array_keys($page_data['content']), array_column($page_data['content'],'en'));
 
             //TODO: 1 model per seeder
