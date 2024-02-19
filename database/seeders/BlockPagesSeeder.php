@@ -13,121 +13,276 @@ class BlockPagesSeeder extends Seeder
 {
 
     protected $pages =  [
-            'TEXT_BLOCK_PAGE' => [
-                'content' => [
-                    'title' => [
-                        'en' => 'Text block',
-                        'nl' => 'Tekstblok',
-                    ],
-                    'intro' => [
-                        'en' => "A basic block with title and text.",
-                        'nl' => 'Een eenvoudig blok met titel en tekst.',
-                    ],
-                    'slug' => [
-                        'en' => 'text-block-page',
-                        'nl' => 'tekstblok-pagina',
-                    ],
+        'ALL_BLOCKS_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'All blocks',
+                    'nl' => 'Alle blokken',
                 ],
-                'blocks' => [
-                    [
-                        'block_type' => 'text',
-                        'block_style' => 'default',
-                        'background_colour' => 'primary'
-                    ]
+                'intro' => [
+                    'en' => "This page contains an example of all blocks.",
+                    'nl' => "Deze pagina bevat een voorbeeld van alle blokken.",
+                ],
+                'slug' => [
+                    'en' => 'all-blocks-page',
+                    'nl' => 'alle-blokken-pagina',
+                ],
+            ],
+            'blocks' => [
+                [
+                    'block_type' => 'text',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ], [
+                    'block_type' => 'text-image',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ], [
+                    'block_type' => 'image',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ], [
+                    'block_type' => 'cards',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ], [
+                    'block_type' => 'video',
+                ], [
+                    'block_type' => 'html',
+                ], [
+                    'block_type' => 'quote',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ], [
+                    'block_type' => 'call-to-action',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ],
+            ],
+        ],
+        'TEXT_BLOCK_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'Text block',
+                    'nl' => 'Tekstblok',
+                ],
+                'intro' => [
+                    'en' => "A basic block with title and text.",
+                    'nl' => 'Een eenvoudig blok met titel en tekst.',
+                ],
+                'slug' => [
+                    'en' => 'text-block-page',
+                    'nl' => 'tekstblok-pagina',
+                ],
+            ],
+            'blocks' => [
+                [
+                    'block_type' => 'text',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ]
+            ]
+        ],
+        'TEXT_IMAGE_BLOCK_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'Text-image block',
+                    'nl' => 'Tekst-afbeeldingblok',
+                ],
+                'intro' => [
+                    'en' => "A basic block with title, image and text.",
+                    'nl' => 'Een eenvoudig blok met titel, afbeelding en tekst.',
+                ],
+                'slug' => [
+                    'en' => 'text-image-block-page',
+                    'nl' => 'tekst-afbeelding-blok-pagina',
+                ],
+            ],
+            'blocks' => [
+                [
+                    'block_type' => 'text-image',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
                 ]
             ],
-            'TEXT_IMAGE_BLOCK_PAGE' => [
-                'content' => [
-                    'title' => [
-                        'en' => 'Text-image block',
-                        'nl' => 'Tekst-afbeeldingblok',
-                    ],
-                    'intro' => [
-                        'en' => "A basic block with title, image and text.",
-                        'nl' => 'Een eenvoudig blok met titel, afbeelding en tekst.',
-                    ],
-                    'slug' => [
-                        'en' => 'text-image-block-page',
-                        'nl' => 'tekst-afbeelding-blok-pagina',
-                    ],
+        ],
+        'IMAGE_BLOCK_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'Image block',
+                    'nl' => 'Afbeeldingblok',
                 ],
-                'blocks' => [
-                    [
-                        'block_type' => 'text-image',
-                        'block_style' => 'default',
-                        'background_colour' => 'primary'
-                    ]
+                'intro' => [
+                    'en' => "A basic block with title and image.",
+                    'nl' => 'Een eenvoudig blok met titel en afbeelding',
+                ],
+                'slug' => [
+                    'en' => 'image-block-page',
+                    'nl' => 'afbeelding-blok-pagina',
                 ],
             ],
-            'IMAGE_BLOCK_PAGE' => [
-                'content' => [
-                    'title' => [
-                        'en' => 'Image block',
-                        'nl' => 'Afbeeldingblok',
-                    ],
-                    'intro' => [
-                        'en' => "A basic block with title and image.",
-                        'nl' => 'Een eenvoudig blok met titel en afbeelding',
-                    ],
-                    'slug' => [
-                        'en' => 'image-block-page',
-                        'nl' => 'afbeelding-blok-pagina',
-                    ],
+            'blocks' => [
+                [
+                    'block_type' => 'image',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ]
+            ],
+        ],
+        'CARDS_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'Cards block',
+                    'nl' => 'Kaartenblok',
                 ],
-                'blocks' => [
-                    [
-                        'block_type' => 'image',
-                        'block_style' => 'default',
-                        'background_colour' => 'primary'
-                    ]
+                'intro' => [
+                    'en' => "This block is comparable to the overview block, however you can add the title, description, image and CTA for each card. The image conversion, background colour and grid columns can be configured.",
+                    'nl' => 'Dit blok is vergelijkbaar met het overzichtsblok, maar je kan de titel, beschrijving, afbeelding en call to action instellen voor iedere kaart afzonderlijk. De afbeeldingsconversie, achtergrondkleur en rasterkolommen kunnen ook ingesteld worden.',
+                ],
+                'slug' => [
+                    'en' => 'cards-block-page',
+                    'nl' => 'kaarten-blok-pagina',
                 ],
             ],
-            'CARDS_PAGE' => [
-                'content' => [
-                    'title' => [
-                        'en' => 'Cards block',
-                        'nl' => 'Kaartenblok',
-                    ],
-                    'intro' => [
-                        'en' => "This block is comparable to the overview block, however you can add the title, description, image and CTA for each card. The image conversion, background colour and grid columns can be configured.",
-                        'nl' => 'Dit blok is vergelijkbaar met het overzichtsblok, maar je kan de titel, beschrijving, afbeelding en call to action instellen voor iedere kaart afzonderlijk. De afbeeldingsconversie, achtergrondkleur en rasterkolommen kunnen ook ingesteld worden.',
-                    ],
-                    'slug' => [
-                        'en' => 'cards-block-page',
-                        'nl' => 'kaarten-blok-pagina',
-                    ],
+            'blocks' => [
+                [
+                    'block_type' => 'cards',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ]
+            ],
+        ],
+        'VIDEO_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'Video block',
+                    'nl' => 'Videoblok',
                 ],
-                'blocks' => [
-                    [
-                        'block_type' => 'cards',
-                        'block_style' => 'default',
-                        'background_colour' => 'primary'
-                    ]
+                'intro' => [
+                    'en' => "You can embed videos from numerous media services and set an overlay image that will cause the video embed to be lazy loaded after clicking the image.",
+                    'nl' => "Je kan video's van meerdere media services embedden en een overlay afbeelding instellen die ervoor zorgt dat de video pas geladen wordt nadat de afbeelding aangeklikt wordt.",
+                ],
+                'slug' => [
+                    'en' => 'video-block-page',
+                    'nl' => 'video-blok-pagina',
                 ],
             ],
-            'VIDEO_PAGE' => [
-                'content' => [
-                    'title' => [
-                        'en' => 'Video block',
-                        'nl' => 'Videoblok',
-                    ],
-                    'intro' => [
-                        'en' => "You can embed videos from numerous media services and set an overlay image that will cause the video embed to be lazy loaded after clicking the image.",
-                        'nl' => "Je kan video's van meerdere media services embedden en een overlay afbeelding instellen die ervoor zorgt dat de video pas geladen wordt nadat de afbeelding aangeklikt wordt.",
-                    ],
-                    'slug' => [
-                        'en' => 'video-block-page',
-                        'nl' => 'video-blok-pagina',
-                    ],
+            'blocks' => [
+                [
+                    'block_type' => 'video',
+                ]
+            ],
+        ],
+        'HTML_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'HTML block',
+                    'nl' => 'HTML-blok',
                 ],
-                'blocks' => [
-                    [
-                        'block_type' => 'video',
-                    ]
+                'intro' => [
+                    'en' => "A block to insert custom HTML.",
+                    'nl' => "Een block waarin je je eigen HTML kan plaatsen.",
+                ],
+                'slug' => [
+                    'en' => 'html-block-page',
+                    'nl' => 'html-blok-pagina',
                 ],
             ],
-
-        ];
+            'blocks' => [
+                [
+                    'block_type' => 'html',
+                ]
+            ],
+        ],
+        'QUOTE_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'Quote block',
+                    'nl' => 'Citeerblok',
+                ],
+                'intro' => [
+                    'en' => "A block to show a quote and it's author.",
+                    'nl' => "Een blok met een citaat en auteur.",
+                ],
+                'slug' => [
+                    'en' => 'quote-block-page',
+                    'nl' => 'citaat-blok-pagina',
+                ],
+            ],
+            'blocks' => [
+                [
+                    'block_type' => 'quote',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ]
+            ],
+        ],
+        'CALL_TO_ACTION_PAGE' => [
+            'content' => [
+                'title' => [
+                    'en' => 'Call to action block',
+                    'nl' => 'Call to action blok',
+                ],
+                'intro' => [
+                    'en' => "This block focuses on adding call-to-actions with image and text.",
+                    'nl' => "In dit block kan je een call-to-action element toevoegen met een afbeelding en tekst.",
+                ],
+                'slug' => [
+                    'en' => 'call-to-action-block-page',
+                    'nl' => 'call-to-action-blok-pagina',
+                ],
+            ],
+            'blocks' => [
+                [
+                    'block_type' => 'call-to-action',
+                    'block_style' => 'default',
+                    'background_colour' => 'primary'
+                ]
+            ],
+        ],
+        // 'OVERVIEW_PAGE' => [
+        //     'content' => [
+        //         'title' => [
+        //             'en' => 'Overview block',
+        //             'nl' => 'Overzichtsblok',
+        //         ],
+        //         'intro' => [
+        //             'en' => "This block can be used to display the overview fields and image of other model records, e.g. for displaying related blog posts. One can configure the grid columns and background colour.",
+        //             'nl' => "Met dit blok kan je de overzichtsvelden en -afbeelding van andere modeltypes weergeven, bvb. bij verwante blog posts. Je kan de grid kolommen en achtergrondkleur configureren.",
+        //         ],
+        //         'slug' => [
+        //             'en' => 'overview-block-page',
+        //             'nl' => 'overview-blok-pagina',
+        //         ],
+        //     ],
+        //     'blocks' => [
+        //         [
+        //             'block_type' => 'overview',
+        //         ]
+        //     ],
+        // ],
+        // 'TEMPLATE_PAGE' => [
+        //     'content' => [
+        //         'title' => [
+        //             'en' => 'Template block',
+        //             'nl' => 'Templateblok',
+        //         ],
+        //         'intro' => [
+        //             'en' => "You can select Blade templates that you want to include. This can be handy to add small forms or interactive components, e.g. a newsletter signup form or a map.",
+        //             'nl' => "Je kan Blade templates selecteren die je wil invoegen. Dit kan handig zijn om kleine formulieren of interactieve elementen toe te voegen, bvb. een inschrijfformulier voor een nieuwsbrief of een kaart.",
+        //         ],
+        //         'slug' => [
+        //             'en' => 'template-block-page',
+        //             'nl' => 'template-blok-pagina',
+        //         ],
+        //     ],
+        //     'blocks' => [
+        //         [
+        //             'block_type' => 'template',
+        //         ]
+        //     ],
+        // ],
+    ];
 
 
     /**
@@ -207,13 +362,12 @@ class BlockPagesSeeder extends Seeder
 
     private function makeBlockOfType($block, $page){
         $type = $block['block_type'];
-        unset($block['block_type']);
         switch($type) {
             case 'text':
                 $block = $this->createTextBlock($page, ...$block);
                 break;
             case 'video':
-                $block = $this->createVideoBlock($page);
+                $block = $this->createVideoBlock($page, ...$block);
                 break;
             case 'image':
                 $block = $this->createImageBlock($page, ...$block);
@@ -243,7 +397,8 @@ class BlockPagesSeeder extends Seeder
         return $block;
     }
 
-    private function createTextBlock($page, $block_style='default', $background_colour='primary'){
+    private function createTextBlock($page, $block_type, $block_style='default', $background_colour='primary'){
+        if($block_type != 'text') {return [];}
         return [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -251,25 +406,27 @@ class BlockPagesSeeder extends Seeder
                 "block_style" => $block_style,
                 "background_colour" => $background_colour,
             ],
-            "type" => "filament-flexible-content-blocks::text",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createVideoBlock($page) {
+    private function createVideoBlock($page, $block_type) {
+        if($block_type != 'video') {return [];}
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::video");
+        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
         return [
             "data" => [
                 "overlay_image" => $mediaObject->uuid ,
                 "embed_url" => "https://www.youtube.com/watch?v=mw4k1tCnAuE", // TODO: uitzoeken hoe random video url genereren (of iets beters dan dit, evt zelf online zetten? Vragen aan iemand?) + video speelt niet: thema?
             ],
-            "type" => "filament-flexible-content-blocks::video",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createImageBlock($page, $block_style='default', $background_colour='primary') {
+    private function createImageBlock($page, $block_type, $block_style='default', $background_colour='primary') {
+        if($block_type != 'image') {return [];}
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::image");
+        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
         return [
             "data" => [
                 "image" => $mediaObject->uuid ,
@@ -281,22 +438,24 @@ class BlockPagesSeeder extends Seeder
                 "block_style" => $block_style,
                 "background_colour" => $background_colour,
             ],
-            "type" => "filament-flexible-content-blocks::image",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createHtmlBlock($page, $block_style='default', $background_colour='primary') {
-            return [
+    private function createHtmlBlock($page, $block_type) {
+        if($block_type != 'html') {return [];}
+        return [
             "data" => [
-
+                "content" => $this->faker->randomHtml(),
             ],
-            "type" => "filament-flexible-content-blocks::html",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createTextImageBlock($page, $block_style='default', $background_colour='primary') {
+    private function createTextImageBlock($page, $block_type, $block_style='default', $background_colour='primary') {
+        if($block_type != 'text-image') {return [];}
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::text-image");
+        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
         return [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -311,38 +470,62 @@ class BlockPagesSeeder extends Seeder
                 "background_colour" => $background_colour,
                 //TODO: call to action ??
             ],
-            "type" => "filament-flexible-content-blocks::text-image",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createOverviewBlock($page, $block_style='default', $background_colour='primary') {
-            return [
+    private function createOverviewBlock($page, $block_type, $block_style='default', $background_colour='primary') {
+        if($block_type != 'overview') {return [];}
+        return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::overview",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createQuoteBlock($page, $block_style='default', $background_colour='primary') {
-            return [
+    private function createQuoteBlock($page, $block_type, $block_style='default', $background_colour='primary') {
+        if($block_type != 'quote') {return [];}
+        return [
             "data" => [
-
+                "quote" => $this->faker->sentence(),
+                "author" => $this->faker->name(),
+                "block_style" => $block_style,
+                "background_colour" => $background_colour,
             ],
-            "type" => "filament-flexible-content-blocks::quote",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createCallToActionBlock($page, $block_style='default', $background_colour='primary') {
-            return [
+    private function createCallToActionBlock($page, $block_type, $block_style='default', $background_colour='primary') {
+        if($block_type != 'call-to-action') {return [];}
+        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
+        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
+        return [
             "data" => [
-
+                "text" => $this->faker->paragraph(),
+                "image" => $mediaObject->uuid ,
+                "title" => $this->faker->sentence(),
+                "block_style" => $block_style,
+                "image_title" => $this->faker->sentence(),
+                "call_to_action" => [[
+                    "url" => $this->faker->url(),
+                    "route" => null,
+                    "entry_id" => null,
+                    "cta_model" => "url",
+                    "button_label" => $this->faker->word(),
+                    "button_style" => "secondary",
+                    "button_open_new_window" => false
+                ]],
+                "image_copyright" => $this->faker->sentence(),
+                "background_colour" => $background_colour
             ],
-            "type" => "filament-flexible-content-blocks::call-to-action",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
-    private function createCardsBlock($page, $block_style='default', $background_colour='primary') {
+    private function createCardsBlock($page, $block_type, $block_style='default', $background_colour='primary') {
+        if($block_type != 'cards') {return [];}
         $cards = [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -352,11 +535,11 @@ class BlockPagesSeeder extends Seeder
                 "background_colour" => $background_colour,
                 "cards" => [],
             ],
-            "type" => "filament-flexible-content-blocks::cards",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
         for($i=0; $i<10; $i++){
             $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-            $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::cards");
+            $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
             $cards["data"]["cards"][] = [
                 "title" =>  $this->faker->sentence(),
                 "text" =>  $this->faker->paragraph(),
@@ -372,12 +555,13 @@ class BlockPagesSeeder extends Seeder
         return $cards;
     }
 
-    private function createTemplateBlock($page, $block_style='default', $background_colour='primary') {
+    private function createTemplateBlock($page, $block_type, $block_style='default', $background_colour='primary') {
+        if($block_type != 'template') {return [];}
         return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::template",
+            "type" => "filament-flexible-content-blocks::" . $block_type,
         ];
     }
 
