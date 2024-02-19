@@ -261,7 +261,7 @@ class BlockPagesSeeder extends Seeder
         return [
             "data" => [
                 "overlay_image" => $mediaObject->uuid ,
-                "embed_url" => "https://www.youtube.com/watch?v=mw4k1tCnAuE", // TODO: uitzoeken hoe random video url genereren (of iets beters dan dit, evt zelf online zetten? Vragen aan iemand?) $this->faker->url(),
+                "embed_url" => "https://www.youtube.com/watch?v=mw4k1tCnAuE", // TODO: uitzoeken hoe random video url genereren (of iets beters dan dit, evt zelf online zetten? Vragen aan iemand?) + video speelt niet: thema?
             ],
             "type" => "filament-flexible-content-blocks::video",
         ];
