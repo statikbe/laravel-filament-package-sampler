@@ -4,10 +4,21 @@ namespace Database\Seeders;
 
 use App\Models\Page;
 use App\Models\TranslatablePage;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Faker\Generator;
 use Illuminate\Container\Container;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\CallToActionBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\CardsBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\HtmlBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\ImageBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\OverviewBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\QuoteBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\TemplateBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\TextBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\TextImageBlock;
+use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\VideoBlock;
 
 class BlockPagesSeeder extends Seeder
 {
@@ -308,97 +319,82 @@ class BlockPagesSeeder extends Seeder
     public function run(): void
     {
         $pages = $this->pages;
-        foreach($pages as $code => $page_data){
-            // create empty content_blocks
-            $page_data['content']['content_blocks'] = ['en' => [], 'nl' => []];
-            $page_data['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL]; // Necessary because Field 'hero_image_copyright' doesn't have a default value
-            $page_data['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL]; // Necessary because Field 'hero_image_title' doesn't have a default value
-            $page_data_en = array_combine(array_keys($page_data['content']), array_column($page_data['content'],'en'));
+        $langCodes = array_keys(LaravelLocalization::getSupportedLocales());
 
-            //TODO: 1 model per seeder
+        foreach($pages as $code => $pageData){
+            // create empty content_blocks
+            $pageData['content']['content_blocks'] = ['en' => [], 'nl' => []];
+            $pageData['content']['hero_image_copyright'] = ['en' => NULL, 'nl' => NULL]; // Necessary because Field 'hero_image_copyright' doesn't have a default value
+            $pageData['content']['hero_image_title'] = ['en' => NULL, 'nl' => NULL]; // Necessary because Field 'hero_image_title' doesn't have a default value
+            $pageDataEn = array_combine(array_keys($pageData['content']), array_column($pageData['content'],'en'));
 
             // make translatable page
-            $translatable_page = TranslatablePage::updateOrCreate(['code'=> $code], $page_data['content']);
-            $langcodes = ['en', 'nl'];
-            foreach($langcodes as $langcode){
+            /* @var TranslatablePage $translatablePage */
+            $translatablePage = TranslatablePage::updateOrCreate(['code'=> $code], $pageData['content']);
+            foreach($langCodes as $langcode){
                 // add seo
-                $translatable_page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->withCustomProperties(['locale' => $langcode])->toMediaCollection("seo_image");
-                $page_data['content']['seo_title'][$langcode] = $this->faker->sentence();
-                $page_data['content']['seo_description'][$langcode] = $this->faker->paragraph();
-                $page_data['content']['seo_keywords'][$langcode] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
+                $translatablePage->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
+                    ->withCustomProperties(['locale' => $langcode])
+                    ->toMediaCollection($translatablePage->getSEOImageCollection());
+                $pageData['content']['seo_title'][$langcode] = $this->faker->sentence();
+                $pageData['content']['seo_description'][$langcode] = $this->faker->paragraph();
+                $pageData['content']['seo_keywords'][$langcode] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
                 // add hero image
-                $translatable_page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->withCustomProperties(['locale' => $langcode])->toMediaCollection("hero_image");
-                $page_data['content']['hero_image_title'][$langcode] = $this->faker->sentence();
-                $page_data['content']['hero_image_copyright'][$langcode] = $this->faker->sentence();
+                $translatablePage->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
+                    ->withCustomProperties(['locale' => $langcode])
+                    ->toMediaCollection($translatablePage->getHeroImageCollection());
+                $pageData['content']['hero_image_title'][$langcode] = $this->faker->sentence();
+                $pageData['content']['hero_image_copyright'][$langcode] = $this->faker->sentence();
                 // add overview
-                $page_data['content']['overview_title'][$langcode] = $this->faker->sentence();
-                $page_data['content']['overview_description'][$langcode] = $this->faker->paragraph();
-                foreach($page_data['blocks'] as $block){
-                    $page_data['content']['content_blocks'][$langcode][] = $this->makeBlockOfType($block, $translatable_page);
+                $pageData['content']['overview_title'][$langcode] = $this->faker->sentence();
+                $pageData['content']['overview_description'][$langcode] = $this->faker->paragraph();
+                foreach($pageData['blocks'] as $block){
+                    $pageData['content']['content_blocks'][$langcode][] = $this->makeBlockOfType($block, $translatablePage);
                 }
             }
-            TranslatablePage::updateOrCreate(['code'=> $code], $page_data['content']);
+            TranslatablePage::updateOrCreate(['code'=> $code], $pageData['content']);
 
             // make simple page
-            $page = Page::updateOrCreate(['code'=> $code], $page_data_en);
+            /* @var Page $page */
+            $page = Page::updateOrCreate(['code'=> $code], $pageDataEn);
             // add seo
-            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->toMediaCollection("seo_image");
-            $page_data_en['content']['seo_title'] = $this->faker->sentence();
-            $page_data_en['content']['seo_description'] = $this->faker->paragraph();
-            $page_data_en['content']['seo_keywords'] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
+            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
+                ->toMediaCollection($page->getSEOImageCollection());
+            $pageDataEn['content']['seo_title'] = $this->faker->sentence();
+            $pageDataEn['content']['seo_description'] = $this->faker->paragraph();
+            $pageDataEn['content']['seo_keywords'] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
             // add hero image
-            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))->toMediaCollection("hero_image");
-            $page_data_en['content']['hero_image_title'] = $this->faker->sentence();
-            $page_data_en['content']['hero_image_copyright'] = $this->faker->sentence();
+            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
+                ->toMediaCollection($page->getHeroImageCollection());
+            $pageDataEn['content']['hero_image_title'] = $this->faker->sentence();
+            $pageDataEn['content']['hero_image_copyright'] = $this->faker->sentence();
             // add overview
-            $page_data_en['content']['overview_title'] = $this->faker->sentence();
-            $page_data_en['content']['overview_description'] = $this->faker->paragraph();
-            foreach($page_data['blocks'] as $block){
-                $page_data_en['content']['content_blocks'][] = $this->makeBlockOfType($block, $page);
+            $pageDataEn['content']['overview_title'] = $this->faker->sentence();
+            $pageDataEn['content']['overview_description'] = $this->faker->paragraph();
+            foreach($pageData['blocks'] as $block){
+                $pageDataEn['content']['content_blocks'][] = $this->makeBlockOfType($block, $page);
             }
-            Page::updateOrCreate(['code'=> $code], $page_data_en['content']);
+            Page::updateOrCreate(['code'=> $code], $pageDataEn['content']);
         }
     }
 
-    private function makeBlockOfType($block, $page){
-        $type = $block['block_type'];
-        switch($type) {
-            case 'text':
-                $block = $this->createTextBlock($page, ...$block);
-                break;
-            case 'video':
-                $block = $this->createVideoBlock($page, ...$block);
-                break;
-            case 'image':
-                $block = $this->createImageBlock($page, ...$block);
-                break;
-            case 'html':
-                $block = $this->createHtmlBlock($page, ...$block);
-                break;
-            case 'text-image':
-                $block = $this->createTextImageBlock($page, ...$block);
-                break;
-            case 'overview':
-                $block = $this->createOverviewBlock($page, ...$block);
-                break;
-            case 'quote':
-                $block = $this->createQuoteBlock($page, ...$block);
-                break;
-            case 'call-to-action':
-                $block = $this->createCallToActionBlock($page, ...$block);
-                break;
-            case 'cards':
-                $block = $this->createCardsBlock($page, ...$block);
-                break;
-            case 'template':
-                $block = $this->createTemplateBlock($page, ...$block);
-                break;
-        }
-        return $block;
+    private function makeBlockOfType(array $block, Model $page): array {
+        return match ($block['block_type']) {
+            'text' => $this->createTextBlock($page, ...$block),
+            'video' => $this->createVideoBlock($page, ...$block),
+            'image' => $this->createImageBlock($page, ...$block),
+            'html' => $this->createHtmlBlock($page, ...$block),
+            'text-image' => $this->createTextImageBlock($page, ...$block),
+            'overview' => $this->createOverviewBlock($page, ...$block),
+            'quote' => $this->createQuoteBlock($page, ...$block),
+            'call-to-action' => $this->createCallToActionBlock($page, ...$block),
+            'cards' => $this->createCardsBlock($page, ...$block),
+            'template' => $this->createTemplateBlock($page, ...$block),
+            default => $block,
+        };
     }
 
-    private function createTextBlock($page, $block_type, $block_style='default', $background_colour='primary'){
-        if($block_type != 'text') {return [];}
+    private function createTextBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -406,12 +402,11 @@ class BlockPagesSeeder extends Seeder
                 "block_style" => $block_style,
                 "background_colour" => $background_colour,
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => TextBlock::getName(),
         ];
     }
 
-    private function createVideoBlock($page, $block_type) {
-        if($block_type != 'video') {return [];}
+    private function createVideoBlock(Model $page, string $block_type): array {
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
         $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
         return [
@@ -419,14 +414,15 @@ class BlockPagesSeeder extends Seeder
                 "overlay_image" => $mediaObject->uuid ,
                 "embed_url" => "https://www.youtube.com/watch?v=mw4k1tCnAuE", // TODO: uitzoeken hoe random video url genereren (of iets beters dan dit, evt zelf online zetten? Vragen aan iemand?) + video speelt niet: thema?
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => VideoBlock::getName(),
         ];
     }
 
-    private function createImageBlock($page, $block_type, $block_style='default', $background_colour='primary') {
-        if($block_type != 'image') {return [];}
+    private function createImageBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
+        $mediaObject = $page->addMedia($image)
+            ->toMediaCollection(ImageBlock::getName());
+
         return [
             "data" => [
                 "image" => $mediaObject->uuid ,
@@ -438,24 +434,24 @@ class BlockPagesSeeder extends Seeder
                 "block_style" => $block_style,
                 "background_colour" => $background_colour,
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => ImageBlock::getName(),
         ];
     }
 
-    private function createHtmlBlock($page, $block_type) {
-        if($block_type != 'html') {return [];}
+    private function createHtmlBlock(Model $page, string $block_type): array {
         return [
             "data" => [
                 "content" => $this->faker->randomHtml(),
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => HtmlBlock::getName(),
         ];
     }
 
-    private function createTextImageBlock($page, $block_type, $block_style='default', $background_colour='primary') {
-        if($block_type != 'text-image') {return [];}
+    private function createTextImageBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
+        $mediaObject = $page->addMedia($image)
+            ->toMediaCollection(TextImageBlock::getName());
+
         return [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -470,22 +466,20 @@ class BlockPagesSeeder extends Seeder
                 "background_colour" => $background_colour,
                 //TODO: call to action ??
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => TextImageBlock::getName(),
         ];
     }
 
-    private function createOverviewBlock($page, $block_type, $block_style='default', $background_colour='primary') {
-        if($block_type != 'overview') {return [];}
+    private function createOverviewBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => OverviewBlock::getName(),
         ];
     }
 
-    private function createQuoteBlock($page, $block_type, $block_style='default', $background_colour='primary') {
-        if($block_type != 'quote') {return [];}
+    private function createQuoteBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
                 "quote" => $this->faker->sentence(),
@@ -493,14 +487,15 @@ class BlockPagesSeeder extends Seeder
                 "block_style" => $block_style,
                 "background_colour" => $background_colour,
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => QuoteBlock::getName(),
         ];
     }
 
-    private function createCallToActionBlock($page, $block_type, $block_style='default', $background_colour='primary') {
-        if($block_type != 'call-to-action') {return [];}
+    private function createCallToActionBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
+        $mediaObject = $page->addMedia($image)
+            ->toMediaCollection(CallToActionBlock::getName());
+
         return [
             "data" => [
                 "text" => $this->faker->paragraph(),
@@ -520,12 +515,11 @@ class BlockPagesSeeder extends Seeder
                 "image_copyright" => $this->faker->sentence(),
                 "background_colour" => $background_colour
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => CallToActionBlock::getName(),
         ];
     }
 
-    private function createCardsBlock($page, $block_type, $block_style='default', $background_colour='primary') {
-        if($block_type != 'cards') {return [];}
+    private function createCardsBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         $cards = [
             "data" => [
                 "title" => $this->faker->sentence(),
@@ -535,11 +529,12 @@ class BlockPagesSeeder extends Seeder
                 "background_colour" => $background_colour,
                 "cards" => [],
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => CardsBlock::getName(),
         ];
         for($i=0; $i<10; $i++){
             $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-            $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
+            $mediaObject = $page->addMedia($image)
+                ->toMediaCollection(CardsBlock::getName());
             $cards["data"]["cards"][] = [
                 "title" =>  $this->faker->sentence(),
                 "text" =>  $this->faker->paragraph(),
@@ -555,13 +550,12 @@ class BlockPagesSeeder extends Seeder
         return $cards;
     }
 
-    private function createTemplateBlock($page, $block_type, $block_style='default', $background_colour='primary') {
-        if($block_type != 'template') {return [];}
+    private function createTemplateBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
 
             ],
-            "type" => "filament-flexible-content-blocks::" . $block_type,
+            "type" => TemplateBlock::getName(),
         ];
     }
 
