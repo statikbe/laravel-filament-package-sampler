@@ -13,7 +13,9 @@ The project makes use of [DDEV](https://ddev.com/) to set up a local server:
 - `ddev start`
 - `ddev composer install`
 - `ddev artisan migrate`
+- __optional:__ seed some sample pages: `ddev artisan db:seed`
 - `ddev artisan storage:link`
+- make a filament user: `ddev artisan filament:user`
 - go to https://larsam.local.statik.be
 
 ## Frontend build

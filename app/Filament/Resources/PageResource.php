@@ -38,6 +38,7 @@ class PageResource extends Resource
             ->schema([
                 Tabs::make()
                     ->columnSpan(2)
+                    ->persistTabInQueryString()
                     ->tabs([
                         Tab::make('General')
                             ->schema([

@@ -45,6 +45,7 @@ class TranslatablePageResource extends Resource
             ->schema([
                 Tabs::make('Heading')
                     ->columnSpan(2)
+                    ->persistTabInQueryString()
                     ->tabs([
                         Tab::make('General')
                             ->schema([
