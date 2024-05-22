@@ -4,21 +4,23 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "statik",
+        "example"
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "artesaos/seotools": "^1.2",
-        "filament/filament": "v3.1.18",
-        "filament/spatie-laravel-translatable-plugin": "^3.0",
-        "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^10.10",
-        "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8",
-        "mcamara/laravel-localization": "^1.8",
+        "filament/filament": "^3.2",
+        "filament/spatie-laravel-translatable-plugin": "^3.2",
+        "guzzlehttp/guzzle": "^7.8",
+        "laravel/framework": "^11",
+        "laravel/sanctum": "^4.0",
+        "laravel/tinker": "^2.9",
+        "mcamara/laravel-localization": "^2.0",
         "statikbe/laravel-filament-chained-translation-manager": "^3.2",
-        "statikbe/laravel-filament-flexible-content-blocks": "0.2.9",
+        "statikbe/laravel-filament-flexible-content-blocks": "dev-main",
         "ext-pdo": "*"
     },
     "require-dev": {
@@ -27,9 +29,9 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.1",
-        "spatie/laravel-ignition": "^2.0"
+        "nunomaduro/collision": "^8.1",
+        "phpunit/phpunit": "^11",
+        "spatie/laravel-ignition": "^2.7"
     },
     "autoload": {
         "psr-4": {
