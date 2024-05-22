@@ -19,6 +19,7 @@ use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\TemplateBlock;
 use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\TextBlock;
 use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\TextImageBlock;
 use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\VideoBlock;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\BlockIdField;
 
 class BlockPagesSeeder extends Seeder
 {
@@ -397,6 +398,7 @@ class BlockPagesSeeder extends Seeder
     private function createTextBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "title" => $this->faker->sentence(),
                 "content" => $this->faker->paragraph(),
                 "block_style" => $block_style,
@@ -411,6 +413,7 @@ class BlockPagesSeeder extends Seeder
         $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
         return [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "overlay_image" => $mediaObject->uuid ,
                 "embed_url" => "https://www.youtube.com/watch?v=mw4k1tCnAuE", // TODO: uitzoeken hoe random video url genereren (of iets beters dan dit, evt zelf online zetten? Vragen aan iemand?) + video speelt niet: thema?
             ],
@@ -425,6 +428,7 @@ class BlockPagesSeeder extends Seeder
 
         return [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "image" => $mediaObject->uuid ,
                 "image_title" => $this->faker->sentence(),
                 "image_width" => "50%",
@@ -441,6 +445,7 @@ class BlockPagesSeeder extends Seeder
     private function createHtmlBlock(Model $page, string $block_type): array {
         return [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "content" => $this->faker->randomHtml(),
             ],
             "type" => HtmlBlock::getName(),
@@ -454,6 +459,7 @@ class BlockPagesSeeder extends Seeder
 
         return [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "title" => $this->faker->sentence(),
                 "text" => $this->faker->paragraph(),
                 "image" => $mediaObject->uuid ,
@@ -473,7 +479,7 @@ class BlockPagesSeeder extends Seeder
     private function createOverviewBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
-
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
             ],
             "type" => OverviewBlock::getName(),
         ];
@@ -482,6 +488,7 @@ class BlockPagesSeeder extends Seeder
     private function createQuoteBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "quote" => $this->faker->sentence(),
                 "author" => $this->faker->name(),
                 "block_style" => $block_style,
@@ -498,6 +505,7 @@ class BlockPagesSeeder extends Seeder
 
         return [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "text" => $this->faker->paragraph(),
                 "image" => $mediaObject->uuid ,
                 "title" => $this->faker->sentence(),
@@ -522,6 +530,7 @@ class BlockPagesSeeder extends Seeder
     private function createCardsBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         $cards = [
             "data" => [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "title" => $this->faker->sentence(),
                 "grid_columns" => 3,
                 "image_conversion" => "crop",
@@ -536,6 +545,7 @@ class BlockPagesSeeder extends Seeder
             $mediaObject = $page->addMedia($image)
                 ->toMediaCollection(CardsBlock::getName());
             $cards["data"]["cards"][] = [
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "title" =>  $this->faker->sentence(),
                 "text" =>  $this->faker->paragraph(),
                 "image" => $mediaObject->uuid ,
@@ -553,7 +563,7 @@ class BlockPagesSeeder extends Seeder
     private function createTemplateBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
         return [
             "data" => [
-
+                BlockIdField::FIELD => BlockIdField::generateBlockId(),
             ],
             "type" => TemplateBlock::getName(),
         ];
