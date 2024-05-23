@@ -1,0 +1,22 @@
+.section {
+    @apply py-8 md:py-12 lg:py-16;
+
+    &--light {
+        @apply bg-light;
+    }
+
+    &--primary {
+        @apply bg-primary;
+    }
+
+    &--secondary {
+        @apply bg-secondary;
+    }
+}
+
+.section--default + .section--default,
+.section--light + .section--light,
+.section--primary + .section--primary,
+.section--secondary + .section--secondary {
+    padding-top: 0 !important;
+}

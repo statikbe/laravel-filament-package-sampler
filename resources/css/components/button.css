@@ -1,0 +1,43 @@
+@layer components {
+    .btn {
+        @apply inline-flex items-center px-6 py-3 leading-none border rounded-full text-lg font-medium;
+
+        transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+        transition-timing-function: ease-in-out;
+        transition-duration: 200ms;
+
+        &--ext {
+            &::after {
+                content: "\2192";
+                @apply ml-1 translate-x-1 flex-shrink-0;
+            }
+        }
+
+        &--primary {
+            @apply text-white no-underline bg-primary border-primary;
+
+            &:hover,
+            .group:hover & {
+                @apply text-primary-hoverContrast no-underline bg-primary-hover border-primary-hover;
+            }
+        }
+
+        &--secondary {
+            @apply text-white no-underline bg-secondary border-secondary;
+
+            &:hover,
+            .group:hover & {
+                @apply text-secondary-hoverContrast no-underline bg-secondary-hover border-secondary-hover;
+            }
+        }
+
+        &--ghost {
+            @apply no-underline bg-transparent text-primary border-primary;
+
+            &:hover,
+            .group:hover & {
+                @apply text-primary-hoverContrast no-underline bg-primary-hover border-primary-hover;
+            }
+        }
+    }
+}

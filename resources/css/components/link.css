@@ -1,0 +1,10 @@
+.link {
+  @apply inline-flex items-center underline hover:no-underline transition ease-in-out duration-300;
+
+  &--ext {
+    &::after {
+      content: "\2192";
+      @apply flex-shrink-0;
+    }
+  }
+}
