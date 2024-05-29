@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+
+@import './base/base.css';
+
+@import 'tailwindcss/components';
+
+@import './components/button.css';
+@import './components/link.css';
+@import './components/section.css';
+
+@import 'tailwindcss/utilities';

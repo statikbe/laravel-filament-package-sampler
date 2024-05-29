@@ -8,10 +8,10 @@
     </header>
 
     <main class="prose-headings:font-base">
-        <x-flexible-hero :page="$page" />
 
-        <div class="prose content">
-            <x-flexible-content-blocks :page="$page"/>
-        </div>
+        <x-flexible-hero :page="$page"/>
+
+        <x-flexible-content-blocks :page="$page"/>
+
     </main>
 </x-layouts.base>
