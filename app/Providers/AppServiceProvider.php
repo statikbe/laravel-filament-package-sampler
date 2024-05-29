@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
+use App\Models\TranslatablePage;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Relation::enforceMorphMap([
+            'page' => Page::class,
+            'translatable_page' => TranslatablePage::class,
+        ]);
     }
 }

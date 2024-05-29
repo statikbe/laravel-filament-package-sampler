@@ -172,7 +172,8 @@ return [
     | List the models that can be used to link to with call-to-action buttons.
     */
     'call_to_action_models' => [
-        //e.g. 'App\Models\FlexiblePage',
+        \App\Models\TranslatablePage::class,
+        \App\Models\Page::class,
     ],
 
     /*
