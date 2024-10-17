@@ -334,16 +334,16 @@ class BlockPagesSeeder extends Seeder
             $translatablePage = TranslatablePage::updateOrCreate(['code'=> $code], $pageData['content']);
             foreach($langCodes as $langcode){
                 // add seo
-                $translatablePage->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
-                    ->withCustomProperties(['locale' => $langcode])
-                    ->toMediaCollection($translatablePage->getSEOImageCollection());
+                $translatablePage->addMediaFromUrl($this->generateImageUrl(400,300))
+                                 ->withCustomProperties(['locale' => $langcode])
+                                 ->toMediaCollection($translatablePage->getSEOImageCollection());
                 $pageData['content']['seo_title'][$langcode] = $this->faker->sentence();
                 $pageData['content']['seo_description'][$langcode] = $this->faker->paragraph();
                 $pageData['content']['seo_keywords'][$langcode] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
                 // add hero image
-                $translatablePage->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
-                    ->withCustomProperties(['locale' => $langcode])
-                    ->toMediaCollection($translatablePage->getHeroImageCollection());
+                $translatablePage->addMediaFromUrl($this->generateImageUrl(400,300))
+                                 ->withCustomProperties(['locale' => $langcode])
+                                 ->toMediaCollection($translatablePage->getHeroImageCollection());
                 $pageData['content']['hero_image_title'][$langcode] = $this->faker->sentence();
                 $pageData['content']['hero_image_copyright'][$langcode] = $this->faker->sentence();
                 // add overview
@@ -359,14 +359,14 @@ class BlockPagesSeeder extends Seeder
             /* @var Page $page */
             $page = Page::updateOrCreate(['code'=> $code], $pageDataEn);
             // add seo
-            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
-                ->toMediaCollection($page->getSEOImageCollection());
+            $page->addMediaFromUrl($this->generateImageUrl(400,300))
+                 ->toMediaCollection($page->getSEOImageCollection());
             $pageDataEn['content']['seo_title'] = $this->faker->sentence();
             $pageDataEn['content']['seo_description'] = $this->faker->paragraph();
             $pageDataEn['content']['seo_keywords'] = [$this->faker->word(), $this->faker->word(), $this->faker->word()];
             // add hero image
-            $page->addMedia($this->faker->image(public_path(),400,300, category:null, fullPath:true))
-                ->toMediaCollection($page->getHeroImageCollection());
+            $page->addMediaFromUrl($this->generateImageUrl(400,300))
+                 ->toMediaCollection($page->getHeroImageCollection());
             $pageDataEn['content']['hero_image_title'] = $this->faker->sentence();
             $pageDataEn['content']['hero_image_copyright'] = $this->faker->sentence();
             // add overview
@@ -409,8 +409,8 @@ class BlockPagesSeeder extends Seeder
     }
 
     private function createVideoBlock(Model $page, string $block_type): array {
-        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
+        $image = $this->generateImageUrl(400,300);
+        $mediaObject = $page->addMediaFromUrl($image)->toMediaCollection("filament-flexible-content-blocks::" . $block_type);
         return [
             "data" => [
                 BlockIdField::FIELD => BlockIdField::generateBlockId(),
@@ -422,9 +422,9 @@ class BlockPagesSeeder extends Seeder
     }
 
     private function createImageBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
-        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)
-            ->toMediaCollection(ImageBlock::getName());
+        $image = $this->generateImageUrl(400,300);
+        $mediaObject = $page->addMediaFromUrl($image)
+                            ->toMediaCollection(ImageBlock::getName());
 
         return [
             "data" => [
@@ -453,9 +453,9 @@ class BlockPagesSeeder extends Seeder
     }
 
     private function createTextImageBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
-        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)
-            ->toMediaCollection(TextImageBlock::getName());
+        $image = $this->generateImageUrl(400,300);
+        $mediaObject = $page->addMediaFromUrl($image)
+                            ->toMediaCollection(TextImageBlock::getName());
 
         return [
             "data" => [
@@ -499,9 +499,9 @@ class BlockPagesSeeder extends Seeder
     }
 
     private function createCallToActionBlock(Model $page, string $block_type, string $block_style='default', string $background_colour='primary'): array {
-        $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-        $mediaObject = $page->addMedia($image)
-            ->toMediaCollection(CallToActionBlock::getName());
+        $image = $this->generateImageUrl(400,300);
+        $mediaObject = $page->addMediaFromUrl($image)
+                            ->toMediaCollection(CallToActionBlock::getName());
 
         return [
             "data" => [
@@ -541,9 +541,9 @@ class BlockPagesSeeder extends Seeder
             "type" => CardsBlock::getName(),
         ];
         for($i=0; $i<10; $i++){
-            $image = $this->faker->image(public_path(),400,300, category:null, fullPath:true);
-            $mediaObject = $page->addMedia($image)
-                ->toMediaCollection(CardsBlock::getName());
+            $image = $this->generateImageUrl(400,300);
+            $mediaObject = $page->addMediaFromUrl($image)
+                                ->toMediaCollection(CardsBlock::getName());
             $cards["data"]["cards"][] = [
                 BlockIdField::FIELD => BlockIdField::generateBlockId(),
                 "title" =>  $this->faker->sentence(),
@@ -567,6 +567,12 @@ class BlockPagesSeeder extends Seeder
             ],
             "type" => TemplateBlock::getName(),
         ];
+    }
+
+
+    private function generateImageUrl(int $width = 400, int $height = 300): string
+    {
+        return "https://picsum.photos/$width/$height";
     }
 
 
