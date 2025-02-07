@@ -21,7 +21,7 @@
         "laravel/tinker": "^2.9",
         "mcamara/laravel-localization": "^2.0",
         "statikbe/laravel-filament-chained-translation-manager": "^3.2",
-        "statikbe/laravel-filament-flexible-content-blocks": "dev-main"
+        "statikbe/laravel-filament-flexible-content-blocks": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
@@ -38,15 +38,6 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "repositories": {
-        "local": {
-            "type": "path",
-            "url": "./plugins/*",
-            "options": {
-                "symlink": true
-            }
         }
     },
     "autoload-dev": {
