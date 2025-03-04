@@ -1,6 +1,7 @@
 <?php
 
 // config for Statikbe/FilamentFlexibleContentBlocks
+use App\Filament\Blocks\SimpleImageBlock;
 use Spatie\Image\Enums\Fit;
 use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\CallToActionBlock;
 use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\CardsBlock;
@@ -40,6 +41,7 @@ return [
     'default_flexible_blocks' => [
         TextBlock::class,
         VideoBlock::class,
+        SimpleImageBlock::class,
         ImageBlock::class,
         HtmlBlock::class,
         TextImageBlock::class,

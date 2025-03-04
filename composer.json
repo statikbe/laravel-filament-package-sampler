@@ -12,15 +12,15 @@
     "require": {
         "php": "^8.2",
         "ext-pdo": "*",
-        "artesaos/seotools": "^1.2",
-        "filament/filament": "^3.2",
-        "filament/spatie-laravel-translatable-plugin": "^3.2",
-        "guzzlehttp/guzzle": "^7.8",
-        "laravel/framework": "^11",
+        "artesaos/seotools": "dev-l12-compatibility",
+        "filament/filament": "^3.3",
+        "filament/spatie-laravel-translatable-plugin": "^3.3",
+        "guzzlehttp/guzzle": "^7.9",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9",
-        "mcamara/laravel-localization": "^2.0",
-        "statikbe/laravel-filament-chained-translation-manager": "^3.2",
+        "laravel/tinker": "^2.10",
+        "mcamara/laravel-localization": "^2.3",
+        "statikbe/laravel-filament-chained-translation-manager": "^3.3",
         "statikbe/laravel-filament-flexible-content-blocks": "dev-main"
     },
     "require-dev": {
@@ -38,15 +38,6 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "repositories": {
-        "local": {
-            "type": "path",
-            "url": "./plugins/*",
-            "options": {
-                "symlink": true
-            }
         }
     },
     "autoload-dev": {
@@ -85,5 +76,18 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "local": {
+        "type": "path",
+        "url": "./packages/*",
+        "options": {
+            "symlink": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/seotools.git"
+        }
+    ]
 }
