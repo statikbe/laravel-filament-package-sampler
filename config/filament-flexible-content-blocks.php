@@ -176,6 +176,10 @@ return [
     'call_to_action_models' => [
         \App\Models\TranslatablePage::class,
         \App\Models\Page::class,
+        [
+            'model' => \Statikbe\FilamentFlexibleBlocksAssetManager\Models\Asset::class,
+            'call_to_action_type' => \Statikbe\FilamentFlexibleBlocksAssetManager\Filament\Form\Fields\Blocks\Type\AssetCallToActionType::class,
+        ],
     ],
 
     /*

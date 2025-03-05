@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Statikbe\FilamentFlexibleBlocksAssetManager\FilamentFlexibleBlocksAssetManagerPlugin;
 use Statikbe\FilamentTranslationManager\FilamentChainedTranslationManagerPlugin;
 use Statikbe\FilamentTranslationManager\FilamentTranslationManager;
 
@@ -61,6 +62,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentChainedTranslationManagerPlugin::make(),
                 SpatieLaravelTranslatablePlugin::make()
                     ->defaultLocales(config('filament-translation-manager.locales', config('filament-translation-manager.supported_locales'))),
+                FilamentFlexibleBlocksAssetManagerPlugin::make(),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css');
     }
