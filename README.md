@@ -5,6 +5,10 @@
 This is a sample project that demos our Filament packages. It can be used for development to test new features or as a 
 sample for how to implement the packages.
 
+- [Laravel Filament Flexible Content Blocks](https://github.com/statikbe/laravel-filament-flexible-content-blocks)
+- [Laravel Filament Flexible Blocks Asset Manager](https://github.com/statikbe/laravel-filament-flexible-blocks-asset-manager)
+- [Laravel Filament Chained Translation Manager](https://github.com/statikbe/laravel-filament-chained-translation-manager)
+
 ## Setup
 
 The project makes use of [DDEV](https://ddev.com/) to set up a local server:
