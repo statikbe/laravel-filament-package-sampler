@@ -21,7 +21,8 @@
         "laravel/tinker": "^2.10",
         "mcamara/laravel-localization": "^2.3",
         "statikbe/laravel-filament-chained-translation-manager": "^3.3",
-        "statikbe/laravel-filament-flexible-content-blocks": "dev-main"
+        "statikbe/laravel-filament-flexible-blocks-asset-manager": "^1.0",
+        "statikbe/laravel-filament-flexible-content-blocks": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
