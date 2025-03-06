@@ -11,9 +11,10 @@ sample for how to implement the packages.
 
 ## Setup
 
+### With DDEV
 The project makes use of [DDEV](https://ddev.com/) to set up a local server:
 
-- `cp .env.example .env`
+- `cp .env.ddev-example .env`
 - `ddev start`
 - `ddev composer install`
 - `ddev artisan migrate`
@@ -21,6 +22,19 @@ The project makes use of [DDEV](https://ddev.com/) to set up a local server:
 - `ddev artisan storage:link`
 - make a filament user: `ddev artisan filament:user`
 - go to https://larsam.local.statik.be
+
+### With Herd
+You might also use [Laravel Herd](https://herd.laravel.com/) to get this project up and running
+
+- Clone this repository to your local Herd directory
+- `cp .env.herd-example .env`
+- `composer install`
+- `php artisan migrate`
+- __optional:__ seed some sample pages: `php artisan db:seed`
+- `php artisan storage:link`
+- make a filament user: `php artisan filament:user`
+- `npm install && npm run build`
+- go to http://laravel-filament-package-sampler.test
 
 ## Frontend build
 
